@@ -98,7 +98,7 @@ public class BinaryTree
             {
                 Node oldRoot = Root;
                 Node newRoot = Root.Left;
-                Node newLeft = Root.Left.Left ?? Root.Left.Right;
+                Node newLeft = Root.Left.Left ?? Root.Left.Right ?? null;
 
                 Root = newRoot;
                 newRoot.Right = oldRoot;
@@ -109,7 +109,7 @@ public class BinaryTree
             {
                 Node oldRoot = Root;
                 Node newRoot = Root.Right;
-                Node newRight = Root.Right.Right ?? Root.Right.Left;
+                Node newRight = Root.Right.Right ?? Root.Right.Left ?? null;
 
                 Root = newRoot;
                 newRoot.Left = oldRoot;
