@@ -13,9 +13,11 @@ for (int i = 0; i < 100; i++)
 {
     binaryTree100.InsertNode(i);
 }
+binaryTree100.Rebalance(binaryTree100.Root);
 #endregion
 
 SW_Binary_100.Start();
+binaryTree100.SearchFor(99);
 SW_Binary_100.Stop();
 
 TimeSpan ElapsedTime = SW_Binary_100.Elapsed;

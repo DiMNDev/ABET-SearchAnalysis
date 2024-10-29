@@ -71,8 +71,8 @@ public class BinaryTree
 
     public bool IsBalanced()
     {
-        int LeftHeight = GetHeight(Root!.Left!);
-        int RightHeight = GetHeight(Root!.Right!);
+        int LeftHeight = GetHeight(Root.Left!);
+        int RightHeight = GetHeight(Root.Right!);
 
         return Math.Abs(LeftHeight - RightHeight) <= 1 ? true : false;
     }
@@ -83,38 +83,45 @@ public class BinaryTree
             return -1;
         }
 
-        return Math.Max(GetHeight(node.Left!), GetHeight(node.Right!)) + 1;
+        return Math.Max(GetHeight(node.Left), GetHeight(node.Right)) + 1;
     }
 
     public void Rebalance(Node currentNode)
     {
-        int LeftHeight = GetHeight(currentNode.Left!);
-        int RightHeight = GetHeight(currentNode.Right!);
 
+        bool stillBalancing = true;
         do
         {
+            int LeftHeight = GetHeight(Root.Left);
+            int RightHeight = GetHeight(Root.Right);
             if (LeftHeight > RightHeight)
             {
-                Node oldRoot = Root!;
-                Node newRoot = Root!.Left!;
-                Node newLeft = Root.Left!.Right!;
+                Node oldRoot = Root;
+                Node newRoot = Root.Left;
+                Node newLeft = Root.Left.Left ?? Root.Left.Right;
 
                 Root = newRoot;
                 newRoot.Right = oldRoot;
+                newRoot.Right.Left = null;
                 oldRoot.Left = newLeft;
             }
             else
             {
-                Node oldRoot = Root!;
-                Node newRoot = Root!.Right!;
-                Node newRight = Root.Right!.Left!;
+                Node oldRoot = Root;
+                Node newRoot = Root.Right;
+                Node newRight = Root.Right.Right ?? Root.Right.Left;
 
                 Root = newRoot;
-                newRoot.Right = oldRoot;
-                oldRoot.Left = newRight;
+                newRoot.Left = oldRoot;
+                newRoot.Left.Right = null;
+                newRoot.Right = newRight;
 
             }
-        } while (IsBalanced());
+            if (IsBalanced())
+            {
+                stillBalancing = false;
+            }
+        } while (stillBalancing);
 
 
     }
